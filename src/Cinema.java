@@ -26,10 +26,10 @@ public class Cinema {
         availableSeatsByMovie.put(movie, seats);
     }
 
-//    public int getAvailableSeats(Movie movie){
-//        Integer seats = availableSeatsByMovie.get(movie);
-//        return seats == null ? 0 : seats;
-//    }
+    public int getAvailableSeats(Movie movie){
+        Integer seats = availableSeatsByMovie.get(movie);
+        return seats == null ? 0 : seats;
+    }
 
     public void showSchedule(){
         System.out.println("=== Cinema: "+ name + "===");
