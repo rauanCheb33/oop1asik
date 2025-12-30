@@ -1,7 +1,7 @@
-import java.sql.SQLOutput;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
+import java.util.*;
+import java.util.stream.Collectors;
 public class Cinema {
 
     private String name;
@@ -72,5 +72,36 @@ public class Cinema {
                 "ticket(s) for '"+ movie.getTitle() + "' total=" + totalCost;
 
     }
+    public Movie searchMovieByTitle(String title ){
+        for(Movie movie: availableSeatsByMovie.keySet()){
+            if(movie.getTitle().equalsIgnoreCase(title)){
+                return movie;
+            }
+        }
+        System.out.println("Movie not found:"+ title);
+        return null;
+    }
+    // сортировка фильмов по максимальной цене
+    public List<Movie> filterMoviesByMaxPrice(double maxPrice){
+        return availableSeatsByMovie.keySet().stream()
+                .filter(movie -> movie.getTicketPrice() <= maxPrice)
+                .collect(Collectors.toList());
+    }
+
+    public List<Movie> getMoviesSortedByTitle() {
+        List<Movie> movieList = new ArrayList<>(availableSeatsByMovie.keySet());
+        // Сортируем по названию, игнорируя регистр букв
+        movieList.sort(Comparator.comparing(Movie::getTitle, String.CASE_INSENSITIVE_ORDER));
+        return movieList;
+    }
+
+    // Метод для сортировки по цене (от дешевых к дорогим)
+    public List<Movie> getMoviesSortedByPrice() {
+        List<Movie> movieList = new ArrayList<>(availableSeatsByMovie.keySet());
+        // Сортируем по цене (Double)
+        movieList.sort(Comparator.comparingDouble(Movie::getTicketPrice));
+        return movieList;
+    }
+
 
 }
